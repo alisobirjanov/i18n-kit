@@ -1,0 +1,12 @@
+{
+  "name": "ali",
+
+  "test": {
+    "bar": {
+      "foo": "foo"
+    },
+    "hii": {
+      "name": "ali"
+    }
+  }
+}
