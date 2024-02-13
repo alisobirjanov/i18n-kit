@@ -9,7 +9,7 @@ const regexp = /\$t\(\s*(["'\`])(.*?)\1\s*(\,.*?)?\)/gm
 
 export default function vitePluginI18n(options: any = {}): Plugin {
   const {
-    locales = './locales',
+    locales = '/locales',
   } = options
 
   const localesDir = normalizePath(resolve(cwd(), locales))
