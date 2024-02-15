@@ -3,7 +3,10 @@
 
   "test": {
     "bar": {
-      "foo": "foo"
+      "foo": "foo",
+      "test": {
+        "name": "test"
+      }
     },
     "hii": {
       "name": "ali"
