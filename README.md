@@ -1,1 +1,1 @@
-# ts-starter
+# i18n-kit-monorepo
