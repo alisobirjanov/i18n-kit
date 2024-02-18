@@ -22,9 +22,6 @@
     "dev": "tsup --watch",
     "start": "esno src/index.ts"
   },
-  "dependencies": {
-    "magic-string": "^0.30.7"
-  },
   "devDependencies": {
     "vue": "^3.3.11"
   }
