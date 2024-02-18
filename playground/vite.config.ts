@@ -4,7 +4,7 @@ import vue from '@vitejs/plugin-vue'
 import Unocss from 'unocss/vite'
 import transformerVariantGroup from '@unocss/transformer-variant-group'
 
-import vitePluginI18n from 'vite-plugin-i18n'
+import vitePluginI18n from '@i18n-kit/vite-plugin'
 
 export default defineConfig({
   plugins: [
