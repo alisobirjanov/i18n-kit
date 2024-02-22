@@ -1,14 +1,23 @@
 <script setup lang="ts">
 import { useI18n } from '@i18n-kit/vue'
 
-const i18n = useI18n()
+const { setLocale, locale } = useI18n()
+function changeLocale() {
+  if (locale.value === 'ru') {
+    setLocale('uz')
+    return
+  }
+  setLocale('ru')
+}
 </script>
 
 <template>
-  <h3 @click="i18n.setLocale(i18n.locale.value === 'uz' ? 'ru' : 'uz')">
-    {{ i18n.locale }}
-  </h3>
   <div>
-    Hello World {{ $t('test.bar.test.name') }}
+    <button @click="changeLocale">
+      TEST
+    </button>
   </div>
+  <h3>
+    {{ locale }} {{ $t('test') }}
+  </h3>
 </template>
