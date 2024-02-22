@@ -1,5 +1,5 @@
 {
-  "name": "@i18n-kit/vue",
+  "name": "@i18n-kit/core",
   "type": "module",
   "version": "0.0.0",
   "keywords": [],
@@ -22,9 +22,5 @@
     "build": "tsup",
     "dev": "tsup --watch",
     "start": "esno src/index.ts"
-  },
-  "devDependencies": {
-    "@i18n-kit/core": "workspace:*",
-    "vue": "^3.3.11"
   }
 }
