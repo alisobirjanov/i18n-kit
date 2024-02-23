@@ -42,6 +42,8 @@ importers:
         specifier: ^1.2.2
         version: 1.2.2(@types/node@20.11.17)
 
+  packages/core: {}
+
   packages/vite-plugin:
     dependencies:
       magic-string:
@@ -50,12 +52,21 @@ importers:
 
   packages/vue:
     devDependencies:
+      '@i18n-kit/core':
+        specifier: workspace:*
+        version: link:../core
       vue:
         specifier: ^3.3.11
-        version: 3.4.18
+        version: 3.4.18(typescript@5.3.3)
 
   playground:
     dependencies:
+      '@i18n-kit/core':
+        specifier: workspace:*
+        version: link:../packages/core
+      '@i18n-kit/vue':
+        specifier: workspace:*
+        version: link:../packages/vue
       vue:
         specifier: ^3.3.11
         version: 3.4.18(typescript@5.3.3)
@@ -63,9 +74,6 @@ importers:
       '@i18n-kit/vite-plugin':
         specifier: workspace:*
         version: link:../packages/vite-plugin
-      '@i18n-kit/vue':
-        specifier: workspace:*
-        version: link:../packages/vue
       '@unocss/transformer-variant-group':
         specifier: ^0.58.5
         version: 0.58.5
@@ -1619,7 +1627,7 @@ packages:
     dependencies:
       '@vue/compiler-ssr': 3.4.18
       '@vue/shared': 3.4.18
-      vue: 3.4.18
+      vue: 3.4.18(typescript@5.3.3)
 
   /@vue/shared@3.4.18:
     resolution: {integrity: sha512-CxouGFxxaW5r1WbrSmWwck3No58rApXgRSBxrqgnY1K+jk20F6DrXJkHdH9n4HVT+/B6G2CAn213Uq3npWiy8Q==}
@@ -4587,20 +4595,6 @@ packages:
       semver: 7.6.0
       typescript: 5.3.3
     dev: true
-
-  /vue@3.4.18:
-    resolution: {integrity: sha512-0zLRYamFRe0wF4q2L3O24KQzLyLpL64ye1RUToOgOxuWZsb/FhaNRdGmeozdtVYLz6tl94OXLaK7/WQIrVCw1A==}
-    peerDependencies:
-      typescript: '*'
-    peerDependenciesMeta:
-      typescript:
-        optional: true
-    dependencies:
-      '@vue/compiler-dom': 3.4.18
-      '@vue/compiler-sfc': 3.4.18
-      '@vue/runtime-dom': 3.4.18
-      '@vue/server-renderer': 3.4.18(vue@3.4.18)
-      '@vue/shared': 3.4.18
 
   /vue@3.4.18(typescript@5.3.3):
     resolution: {integrity: sha512-0zLRYamFRe0wF4q2L3O24KQzLyLpL64ye1RUToOgOxuWZsb/FhaNRdGmeozdtVYLz6tl94OXLaK7/WQIrVCw1A==}
