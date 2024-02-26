@@ -1,18 +1,30 @@
-import { resolve } from 'node:path'
 import { cwd } from 'node:process'
+import { parse, resolve } from 'node:path'
 import type { Plugin } from 'vite'
-import { normalizePath } from 'vite'
 import MagicString from 'magic-string'
+import { normalizePath } from 'vite'
+import fg from 'fast-glob'
+import { generateDtsFile, generateVirtualModule } from './generate'
 import { charCombinations, deepFlatten } from './utils'
+
+const virtualModuleId = 'virtual:i18n-kit'
+const resolvedVirtualModuleId = `\0${virtualModuleId}`
 
 const regexp = /\$t\(\s*(["'\`])(.*?)\1\s*(\,.*?)?\)/gm
 
 export default function vitePluginI18n(options: any = {}): Plugin {
-  const {
+  let {
     locales = './locales',
+    dts = true,
   } = options
 
   const localesDir = normalizePath(resolve(cwd(), locales))
+  const localesParsedPath = getParsedPaths(`${localesDir}/*.json`)
+
+  if (dts) {
+    dts = normalizePath(resolve(cwd(), typeof dts === 'boolean' ? './i18n.d.ts' : dts))
+    generateDtsFile(dts, localesParsedPath)
+  }
 
   const hashMap = new Map()
   const nextCombination = charCombinations()
@@ -28,7 +40,15 @@ export default function vitePluginI18n(options: any = {}): Plugin {
 
   return {
     enforce: 'pre',
-    name: 'vite-plugin-i18n',
+    name: '@i18n-kit/vite-plugin',
+    resolveId(id) {
+      if (id === virtualModuleId)
+        return resolvedVirtualModuleId
+    },
+    load(id) {
+      if (id === resolvedVirtualModuleId)
+        return generateVirtualModule(localesParsedPath)
+    },
     transform(code: string, id: string) {
       if (id.startsWith(localesDir) && id.endsWith('.json'))
         return transformLocalesJson(code, hashFn)
@@ -75,4 +95,8 @@ function transformMatchesMessages(code: string, matches: any[], hashFn: (key: st
   return {
     code: s.toString(),
   }
+}
+
+function getParsedPaths(source: string) {
+  return fg.sync(source).map(parse)
 }
