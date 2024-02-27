@@ -31,13 +31,13 @@ interface Options {
 }
 
 export interface Context {
-  t: (key: MessagesFlattenKeys) => string
+  t: (key: MessagesFlattenKeys, param?: any) => string
   locale: any
-  setLocale: (_locale: Locales) => void
+  setLocale: (newLang: Locales) => void
   messages: unknown
 }
 
-export function createContext<T extends Options>(options: T, createState: any): Context {
+export function createContext(options: Options, createState: any): Context {
   const {
     locale: defaultLocale,
     messages = {},
@@ -48,23 +48,41 @@ export function createContext<T extends Options>(options: T, createState: any): 
   const context: Context = {
     messages,
     locale,
-    t(key) {
-      return messages[locale.value] ? messages[locale.value][key] : ''
+    t(key, param) {
+      const message = messages[locale.value] ? messages[locale.value][key] : ''
+      if (!param)
+        return message
+      return interpolateTranslation(message, param)
     },
-    async setLocale(_locale) {
-      const message = messages[_locale]
-      if (!message || _locale === locale.value)
+    async setLocale(newLocale) {
+      const message = messages[newLocale]
+      if (!message || newLocale === locale.value)
         return
 
       if (typeof message === 'function') {
         const res = await message()
-        messages[_locale] = res.default
+        messages[newLocale] = res.default
       }
-      locale.value = _locale
+      locale.value = newLocale
     },
   }
 
   context.setLocale(defaultLocale)
 
   return context
+}
+
+const mustacheParamRegex = /\{\{\s*([a-zA-Z10-9]+)\s*\}\}/g
+
+// not the most performant way, but it should be okay
+function interpolateTranslation(
+  translation: string,
+  params: Record<string, string | number>,
+) {
+  return translation.replace(mustacheParamRegex, (original, paramKey) => {
+    if (paramKey in params)
+      return String(params[paramKey])
+
+    return original
+  })
 }
