@@ -1,28 +1,41 @@
 import { cwd } from 'node:process'
 import { parse, resolve } from 'node:path'
 import type { Plugin } from 'vite'
-import MagicString from 'magic-string'
-import { normalizePath } from 'vite'
 import fg from 'fast-glob'
+import { normalizePath as _normalizePath } from 'vite'
+import picomatch from 'picomatch'
+import { charCombinations } from './utils'
 import { generateDtsFile, generateVirtualModule } from './generate'
-import { charCombinations, deepFlatten } from './utils'
+import { transformLocalesJson, transformMatchesMessages } from './transform'
 
 const virtualModuleId = 'virtual:i18n-kit'
 const resolvedVirtualModuleId = `\0${virtualModuleId}`
 
-const regexp = /\$t\(\s*(["'\`])(.*?)\1\s*(\,.*?)?\)/gm
+const regexp = /\$t\(\s*(["'\`])(.*?)\1\s*(\,.*?)?\)/g
 
-export default function vitePluginI18n(options: any = {}): Plugin {
+function normalizePath(path: string) {
+  return _normalizePath(resolve(cwd(), path))
+}
+
+interface Options {
+  locales?: string
+  dts?: boolean | string
+}
+
+export default function vitePluginI18n(options: Options = {}): Plugin {
   let {
     locales = './locales',
     dts = true,
   } = options
 
-  const localesDir = normalizePath(resolve(cwd(), locales))
-  const localesParsedPath = getParsedPaths(`${localesDir}/*.json`)
+  const localesDir = normalizePath(locales)
+  const localesGlob = `${localesDir}/*.json`
+  const localesParsedPath = fg.sync(localesGlob).map(parse)
+  const isMatch = picomatch(localesGlob)
+  const localesIdFilter = (id: string) => isMatch(_normalizePath(id))
 
   if (dts) {
-    dts = normalizePath(resolve(cwd(), typeof dts === 'boolean' ? './i18n.d.ts' : dts))
+    dts = normalizePath(typeof dts === 'boolean' ? './i18n.d.ts' : dts)
     generateDtsFile(dts, localesParsedPath)
   }
 
@@ -39,8 +52,8 @@ export default function vitePluginI18n(options: any = {}): Plugin {
   }
 
   return {
-    enforce: 'pre',
     name: '@i18n-kit/vite-plugin',
+    enforce: 'pre',
     resolveId(id) {
       if (id === virtualModuleId)
         return resolvedVirtualModuleId
@@ -49,8 +62,16 @@ export default function vitePluginI18n(options: any = {}): Plugin {
       if (id === resolvedVirtualModuleId)
         return generateVirtualModule(localesParsedPath)
     },
+    configureServer({ watcher, restart }) {
+      const checkReload = (path: string) => {
+        if (localesIdFilter(path))
+          restart()
+      }
+      watcher.on('add', checkReload)
+      watcher.on('unlink', checkReload)
+    },
     transform(code: string, id: string) {
-      if (id.startsWith(localesDir) && id.endsWith('.json'))
+      if (localesIdFilter(id))
         return transformLocalesJson(code, hashFn)
 
       const matches = [...code.matchAll(regexp)]
@@ -61,42 +82,4 @@ export default function vitePluginI18n(options: any = {}): Plugin {
       return transformMatchesMessages(code, matches, hashFn)
     },
   }
-}
-
-function transformLocalesJson(code: string, hashFn: (key: string) => string) {
-  try {
-    const json = deepFlatten(JSON.parse(code))
-
-    const result = Object.entries(json).reduce((acc: Record<string, string>, [key, value]) => {
-      const hash = hashFn(key)
-      acc[hash] = value
-      return acc
-    }, {})
-    return {
-      code: JSON.stringify(result),
-    }
-  }
-  catch (err) {
-    console.log(err)
-  }
-}
-
-function transformMatchesMessages(code: string, matches: any[], hashFn: (key: string) => string) {
-  const s = new MagicString(code)
-
-  for (const match of matches) {
-    const key = match[2]
-    const hash = hashFn(key)
-    const start = match.index!
-    const str = match[0].replace(key, hash)
-    s.overwrite(start, start + match[0].length, str)
-  }
-
-  return {
-    code: s.toString(),
-  }
-}
-
-function getParsedPaths(source: string) {
-  return fg.sync(source).map(parse)
 }
