@@ -29,9 +29,14 @@
     "play": "npm -C playground run dev",
     "prepare": "npx simple-git-hooks"
   },
+  "dependencies": {
+    "fast-glob": "^3.3.2",
+    "picomatch": "^4.0.1"
+  },
   "devDependencies": {
     "@antfu/eslint-config": "^2.6.4",
     "@types/node": "^20.11.17",
+    "@types/picomatch": "^2.3.3",
     "bumpp": "^9.3.0",
     "eslint": "^8.56.0",
     "esno": "^4.0.0",
