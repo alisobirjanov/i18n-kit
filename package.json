@@ -1,7 +1,7 @@
 {
   "name": "i18n-kit-monorepo",
   "type": "module",
-  "version": "0.0.0",
+  "version": "0.0.1-beta.0",
   "keywords": [],
   "sideEffects": false,
   "exports": {
