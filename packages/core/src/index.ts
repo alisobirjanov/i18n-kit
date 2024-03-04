@@ -72,6 +72,7 @@ export function createContext(options: Options, createState: any): Context {
   return context
 }
 
+// https://github.com/Ayub-Begimkulov/i18n/blob/main/src/i18n.ts#L125
 const mustacheParamRegex = /\{\{\s*([a-zA-Z10-9]+)\s*\}\}/g
 
 // not the most performant way, but it should be okay
