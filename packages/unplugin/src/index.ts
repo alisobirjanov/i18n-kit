@@ -7,6 +7,7 @@ import picomatch from 'picomatch'
 import { charCombinations } from './utils'
 import { generateDtsFile, generateVirtualModule } from './generate'
 import { transformLocalesJson, transformMatchesMessages } from './transform'
+import { translate as _translate } from './translate'
 
 const virtualModuleId = 'virtual:i18n-kit'
 const resolvedVirtualModuleId = `\0${virtualModuleId}`
@@ -20,12 +21,16 @@ function normalizePath(path: string) {
 interface Options {
   locales?: string
   dts?: boolean | string
+  translate?: {
+    from: string
+  }
 }
 
 export default function vitePluginI18n(options: Options = {}): Plugin {
   let {
     locales = './locales',
     dts = true,
+    translate,
   } = options
 
   const localesDir = normalizePath(locales)
@@ -37,6 +42,13 @@ export default function vitePluginI18n(options: Options = {}): Plugin {
   if (dts) {
     dts = normalizePath(typeof dts === 'boolean' ? './i18n.d.ts' : dts)
     generateDtsFile(dts, localesParsedPath)
+  }
+
+  if (translate) {
+    const from = localesParsedPath.find(({ name }) => name === translate?.from)
+    const to = localesParsedPath.filter(({ name }) => name !== translate?.from)
+    if (from && to.length)
+      _translate(from, to)
   }
 
   const hashMap = new Map()
@@ -71,6 +83,7 @@ export default function vitePluginI18n(options: Options = {}): Plugin {
       watcher.on('unlink', checkReload)
     },
     transform(code: string, id: string) {
+      // root/path/to/locales/*.json
       if (localesIdFilter(id))
         return transformLocalesJson(code, hashFn)
 
