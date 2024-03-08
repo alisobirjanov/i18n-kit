@@ -54,7 +54,13 @@ importers:
 
   packages/core: {}
 
-  packages/vite-plugin:
+  packages/translate:
+    dependencies:
+      translate:
+        specifier: ^2.0.2
+        version: 2.0.2
+
+  packages/unplugin:
     dependencies:
       magic-string:
         specifier: ^0.30.7
@@ -83,7 +89,7 @@ importers:
     devDependencies:
       '@i18n-kit/vite-plugin':
         specifier: workspace:*
-        version: link:../packages/vite-plugin
+        version: link:../packages/unplugin
       '@unocss/transformer-variant-group':
         specifier: ^0.58.5
         version: 0.58.5
@@ -4246,6 +4252,10 @@ packages:
     dependencies:
       punycode: 2.3.1
     dev: true
+
+  /translate@2.0.2:
+    resolution: {integrity: sha512-K07zjM146c2RYbdlG0xCNGkE6WPdcWjdWX55SOpHzgIq9Elj+LvvXDAfbeQ8gSfkrluaGahnNv2pYfq82UiBDQ==}
+    dev: false
 
   /tree-kill@1.2.2:
     resolution: {integrity: sha512-L0Orpi8qGpRG//Nd+H90vFB+3iHnue1zSSGmNOOCh1GLJ7rUKVwV2HvijphGQS2UmhUZewS9VgvxYIdgr+fG1A==}
