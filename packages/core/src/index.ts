@@ -49,7 +49,9 @@ export function createContext(options: Options, createState: any): Context {
     messages,
     locale,
     t(key, param) {
-      const message = messages[locale.value] ? messages[locale.value][key] : ''
+      const message = messages[locale.value]
+        ? messages[locale.value][key] || ''
+        : ''
       if (!param)
         return message
       return interpolateTranslation(message, param)
