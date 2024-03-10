@@ -11,7 +11,7 @@ import { transformLocalesJson, transformMatchesMessages } from './transform'
 const virtualModuleId = 'virtual:i18n-kit'
 const resolvedVirtualModuleId = `\0${virtualModuleId}`
 
-const regexp = /\$t\(\s*(["'\`])(.*?)\1\s*(\,.*?)?\)/g
+const regexp = /\$t|t\(\s*(["'\`])(.*?)\1\s*(\,.*?)?\)/g
 
 function normalizePath(path: string) {
   return _normalizePath(resolve(cwd(), path))
