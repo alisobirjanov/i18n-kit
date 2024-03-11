@@ -49,9 +49,11 @@ export function createContext(options: Options, createState: any): Context {
     messages,
     locale,
     t(key, param) {
-      const message = messages[locale.value]
-        ? messages[locale.value][key] || ''
-        : ''
+      let message = messages[locale.value]
+      if (!message)
+        return ''
+
+      message = typeof key === 'string' ? getMessage(message, key) : ''
       if (!param)
         return message
       return interpolateTranslation(message, param)
@@ -72,6 +74,10 @@ export function createContext(options: Options, createState: any): Context {
   context.setLocale(defaultLocale)
 
   return context
+}
+
+function getMessage(messages: any, key: string) {
+  return key.split('.').reduce((acc, key) => acc[key] ? acc[key] : '', messages)
 }
 
 // https://github.com/Ayub-Begimkulov/i18n/blob/main/src/i18n.ts#L125
