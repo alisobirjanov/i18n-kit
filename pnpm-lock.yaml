@@ -7,13 +7,6 @@ settings:
 importers:
 
   .:
-    dependencies:
-      fast-glob:
-        specifier: ^3.3.2
-        version: 3.3.2
-      picomatch:
-        specifier: ^4.0.1
-        version: 4.0.1
     devDependencies:
       '@antfu/eslint-config':
         specifier: ^2.6.4
@@ -56,9 +49,6 @@ importers:
 
   packages/translate:
     dependencies:
-      '@i18n-kit/translate':
-        specifier: workspace:0.0.1-beta.2
-        version: 'link:'
       cac:
         specifier: ^6.7.14
         version: 6.7.14
@@ -78,24 +68,28 @@ importers:
 
   packages/unplugin:
     dependencies:
+      '@rollup/pluginutils':
+        specifier: ^5.1.0
+        version: 5.1.0
+      fast-glob:
+        specifier: ^3.3.2
+        version: 3.3.2
       magic-string:
         specifier: ^0.30.7
         version: 0.30.7
 
   packages/vue:
-    devDependencies:
+    dependencies:
       '@i18n-kit/core':
         specifier: workspace:*
         version: link:../core
+    devDependencies:
       vue:
         specifier: ^3.3.11
         version: 3.4.18(typescript@5.3.3)
 
   playground:
     dependencies:
-      '@i18n-kit/core':
-        specifier: workspace:*
-        version: link:../packages/core
       '@i18n-kit/vue':
         specifier: workspace:*
         version: link:../packages/vue
@@ -103,7 +97,7 @@ importers:
         specifier: ^3.3.11
         version: 3.4.18(typescript@5.3.3)
     devDependencies:
-      '@i18n-kit/vite-plugin':
+      '@i18n-kit/unplugin':
         specifier: workspace:*
         version: link:../packages/unplugin
       '@unocss/transformer-variant-group':
@@ -949,7 +943,6 @@ packages:
       '@types/estree': 1.0.5
       estree-walker: 2.0.2
       picomatch: 2.3.1
-    dev: true
 
   /@rollup/rollup-android-arm-eabi@4.10.0:
     resolution: {integrity: sha512-/MeDQmcD96nVoRumKUljsYOLqfv1YFJps+0pTrb2Z9Nl/w5qNUysMaWQsrd1mvAlNT4yza1iVyIu4Q4AgF6V3A==}
@@ -1128,7 +1121,6 @@ packages:
 
   /@types/estree@1.0.5:
     resolution: {integrity: sha512-/kYRxGDLWzHOB7q+wtSUQlFrtcdUccpfy+X+9iMBpHK8QLLhx2wIPYuS5DYtR9Wa/YlZAbIovy7qVdB1Aq6Lyw==}
-    dev: true
 
   /@types/json-schema@7.0.15:
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
@@ -3734,11 +3726,6 @@ packages:
     resolution: {integrity: sha512-I3EurrIQMlRc9IaAZnqRR044Phh2DXY+55o7uJ0V+hYZAcQYSuFWsc9q5PvyDHUSCe1Qxn/iBz+78s86zWnGag==}
     engines: {node: '>=10'}
     dev: true
-
-  /picomatch@4.0.1:
-    resolution: {integrity: sha512-xUXwsxNjwTQ8K3GnT4pCJm+xq3RUPQbmkYJTP5aFIfNIvbcc/4MUxgBaaRSZJ6yGJZiGSyYlM6MzwTsRk8SYCg==}
-    engines: {node: '>=12'}
-    dev: false
 
   /pidtree@0.6.0:
     resolution: {integrity: sha512-eG2dWTVw5bzqGRztnHExczNxt5VGsE6OwTeCG3fdUf9KBsZzO3R5OIIIzWR+iZA0NtZ+RDVdaoE2dK1cn6jH4g==}
