@@ -23,8 +23,10 @@
     "dev": "tsup --watch",
     "start": "esno src/index.ts"
   },
+  "dependencies": {
+    "@i18n-kit/core": "workspace:*"
+  },
   "devDependencies": {
-    "@i18n-kit/core": "workspace:*",
     "vue": "^3.3.11"
   }
 }

@@ -1,11 +1,16 @@
 {
-  "name": "@i18n-kit/vite-plugin",
+  "name": "@i18n-kit/unplugin",
   "type": "module",
   "version": "0.0.0",
   "keywords": [],
   "sideEffects": false,
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./vite": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
@@ -23,6 +28,8 @@
     "start": "esno src/index.ts"
   },
   "dependencies": {
+    "@rollup/pluginutils": "^5.1.0",
+    "fast-glob": "^3.3.2",
     "magic-string": "^0.30.7"
   }
 }

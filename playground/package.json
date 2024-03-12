@@ -9,12 +9,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@i18n-kit/core": "workspace:*",
     "@i18n-kit/vue": "workspace:*",
     "vue": "^3.3.11"
   },
   "devDependencies": {
-    "@i18n-kit/vite-plugin": "workspace:*",
+    "@i18n-kit/unplugin": "workspace:*",
     "@unocss/transformer-variant-group": "^0.58.5",
     "@vitejs/plugin-vue": "^4.5.2",
     "typescript": "^5.2.2",
