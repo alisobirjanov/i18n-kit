@@ -3,7 +3,8 @@ import { parse, resolve } from 'node:path'
 import type { Plugin } from 'vite'
 import fg from 'fast-glob'
 import { normalizePath as _normalizePath } from 'vite'
-import picomatch from 'picomatch'
+import { createFilter } from '@rollup/pluginutils'
+import type { FilterPattern } from '@rollup/pluginutils'
 import { charCombinations } from './utils'
 import { generateDtsFile, generateVirtualModule } from './generate'
 import { transformLocalesJson, transformMatchesMessages } from './transform'
@@ -11,7 +12,7 @@ import { transformLocalesJson, transformMatchesMessages } from './transform'
 const virtualModuleId = 'virtual:i18n-kit'
 const resolvedVirtualModuleId = `\0${virtualModuleId}`
 
-const regexp = /\$t|t\(\s*(["'\`])(.*?)\1\s*(\,.*?)?\)/g
+const regexp = /[$]?t\(\s*(["'\`])(.*?)\1\s*(\,.*?)?\)/g
 
 function normalizePath(path: string) {
   return _normalizePath(resolve(cwd(), path))
@@ -20,18 +21,28 @@ function normalizePath(path: string) {
 interface Options {
   locales?: string
   dts?: boolean | string
+  include?: FilterPattern
+  exclude?: FilterPattern
+  lazyLoadMessages?: boolean
 }
 
 export default function vitePluginI18n(options: Options = {}): Plugin {
   let {
     locales = './locales',
     dts = true,
+    include = [/\.[cm]?[jt]sx|vue?$/],
+    exclude = [],
+    lazyLoadMessages = false,
   } = options
+
+  // TODO: refactor this code
+  exclude = Array.isArray(exclude) ? [...exclude, /node_modules/] : [exclude, /node_modules/]
+  const idFilter = createFilter(include, exclude)
 
   const localesDir = normalizePath(locales)
   const localesGlob = `${localesDir}/*.json`
   const localesParsedPath = fg.sync(localesGlob).map(parse)
-  const isMatch = picomatch(localesGlob)
+  const isMatch = createFilter(localesGlob)
   const localesIdFilter = (id: string) => isMatch(_normalizePath(id))
 
   if (dts) {
@@ -52,7 +63,7 @@ export default function vitePluginI18n(options: Options = {}): Plugin {
   }
 
   return {
-    name: '@i18n-kit/vite-plugin',
+    name: '@i18n-kit/unplugin',
     enforce: 'pre',
     resolveId(id) {
       if (id === virtualModuleId)
@@ -60,7 +71,7 @@ export default function vitePluginI18n(options: Options = {}): Plugin {
     },
     load(id) {
       if (id === resolvedVirtualModuleId)
-        return generateVirtualModule(localesParsedPath)
+        return generateVirtualModule(localesParsedPath, lazyLoadMessages)
     },
     configureServer({ watcher, restart }) {
       const checkReload = (path: string) => {
@@ -75,6 +86,8 @@ export default function vitePluginI18n(options: Options = {}): Plugin {
       if (localesIdFilter(id))
         return transformLocalesJson(code, hashFn)
 
+      if (!idFilter(id))
+        return
       const matches = [...code.matchAll(regexp)]
 
       if (!matches.length)
