@@ -31,7 +31,7 @@ interface Options {
 }
 
 export interface Context {
-  t: (key: MessagesFlattenKeys, param?: any) => string
+  t: (key: MessagesFlattenKeys, param?: Record<string, string>) => string
   locale: any
   setLocale: (newLang: Locales) => void
   messages: unknown
