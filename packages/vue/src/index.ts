@@ -7,7 +7,7 @@ export * from '@i18n-kit/core'
 
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
-    $t: (key: MessagesFlattenKeys, param: Record<string, string>) => string
+    $t: (key: MessagesFlattenKeys, param?: Record<string, string>) => string
   }
 }
 
