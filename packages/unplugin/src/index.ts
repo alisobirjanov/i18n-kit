@@ -9,7 +9,7 @@ import { charCombinations } from './utils'
 import { generateDtsFile, generateVirtualModule } from './generate'
 import { transformLocalesJson, transformMatchesMessages } from './transform'
 
-const virtualModuleId = 'virtual:i18n-kit'
+const virtualModuleId = '@i18n-kit/messages'
 const resolvedVirtualModuleId = `\0${virtualModuleId}`
 
 const regexp = /[$]?t\(\s*(["'\`])(.*?)\1\s*(\,.*?)?\)/g

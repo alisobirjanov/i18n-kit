@@ -13,7 +13,7 @@ export function generateDtsFile(path: string, localesParsedPath: ParsedPath[]) {
   })
 
   const dts
-    = `declare module 'virtual:i18n-kit' {
+    = `declare module '@i18n-kit/messages' {
   ${imports.join('\n\t')}
 
   declare module '@i18n-kit/vue' {
