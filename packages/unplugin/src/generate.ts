@@ -36,11 +36,11 @@ export function generateVirtualModule(localesParsedPath: ParsedPath[], lazy: boo
   localesParsedPath.forEach(({ dir, base, name }) => {
     const path = `${dir}/${base}`
     if (lazy) {
-      imports += `import ${name} from '${path}'\n`
-      exports += `${name},`
+      exports += `${name}: () => import('${path}'),`
     }
     else {
-      exports += `${name}: () => import('${path}'),`
+      imports += `import ${name} from '${path}'\n`
+      exports += `${name},`
     }
   })
 
