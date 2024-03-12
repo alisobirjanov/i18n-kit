@@ -14,6 +14,8 @@
 pnpm add @i18n-kit/vue
 ```
 
+## Usage
+
 ```ts
 // main.ts
 import { createApp } from 'vue'
@@ -38,8 +40,6 @@ app.use(i18n)
 
 app.mount('#app')
 ```
-
-## Usage
 
 ```html
 // App.vue
