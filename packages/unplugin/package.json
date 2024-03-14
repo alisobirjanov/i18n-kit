@@ -2,11 +2,12 @@
   "name": "@i18n-kit/unplugin",
   "type": "module",
   "version": "0.0.1-beta.0",
+  "private": false,
   "author": "Ali",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/alisobirjanov/i18n-kit.git",
-    "directory": "packages/translate"
+    "directory": "packages/unplugin"
   },
   "keywords": [],
   "sideEffects": false,
