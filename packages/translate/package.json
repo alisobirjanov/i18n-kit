@@ -1,7 +1,8 @@
 {
   "name": "@i18n-kit/translate",
   "type": "module",
-  "version": "0.0.1-beta.2",
+  "version": "0.0.1-beta.4",
+  "private": false,
   "author": "Ali",
   "repository": {
     "type": "git",
@@ -21,7 +22,7 @@
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "bin": {
-    "i18n-kit/translate": "bin/index.js"
+    "i18n-kit": "bin/index.js"
   },
   "files": [
     "bin",
