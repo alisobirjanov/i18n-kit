@@ -68,6 +68,8 @@ export async function translate(options: Options) {
     writeFileSync(`${path.dir}/${path.base}`, JSON.stringify(result, null, 2))
     console.log(`\t${path.base}`)
   }
+
+  console.log('\nDone!\n')
 }
 
 function readMessages(path: ParsedPath) {
