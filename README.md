@@ -5,8 +5,9 @@
 
 - i18n resource pre-compilation
 - 100% TypeSafe
+- Lightweight
 
-![image_2024-03-13_00-25-43](https://github.com/alisobirjanov/i18n-kit/assets/80165465/f220c2c5-98bf-4c61-a282-94ef8ab22235)
+![Скриншот 18-03-2024 221124](https://github.com/alisobirjanov/i18n-kit/assets/80165465/55df9b46-9b3e-4373-9560-b6ea36bc7958)
 
 
 ## Install
@@ -166,5 +167,5 @@ interface KeepOption {
 ```
 ## Translate
 ```shell
-npx i18n-kit --locales path/to/messages --from en 
+npx @i18n-kit/translate --locales path/to/messages --from en 
 ```
