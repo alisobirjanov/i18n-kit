@@ -1,7 +1,7 @@
 import { inject, ref } from 'vue'
 import type { App } from 'vue'
 import { createContext } from '@i18n-kit/core'
-import type { Context, MessagesFlattenKeys } from '@i18n-kit/core'
+import type { Context, MessagesFlattenKeys, Options } from '@i18n-kit/core'
 
 export * from '@i18n-kit/core'
 
@@ -11,7 +11,7 @@ declare module '@vue/runtime-core' {
   }
 }
 
-export function createI18n(options: any = {}) {
+export function createI18n(options: Options = {}) {
   const context = createContext(options, ref)
 
   return {
@@ -22,6 +22,6 @@ export function createI18n(options: any = {}) {
   }
 }
 
-export function useI18n(options: any = {}): Context {
+export function useI18n(options: Options = {}): Context {
   return inject<Context>('context') || createContext(options, ref)
 }
