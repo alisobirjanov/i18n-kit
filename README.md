@@ -4,7 +4,7 @@
 # 🌟 Features
 
 - 100% TypeSafe
-- Lightweight
+- Lightweight (0.47 kB gzipped)
 - i18n resource pre-compilation
 
 ![Скриншот 18-03-2024 221124](https://github.com/alisobirjanov/i18n-kit/assets/80165465/55df9b46-9b3e-4373-9560-b6ea36bc7958)
@@ -47,6 +47,15 @@ app.mount('#app')
   </div>
 </template>
 ```
+
+## Hook
+
+```ts
+import { useI18n } from '@i18n-kit/vue'
+
+const { t, setLocale } = useI18n()
+```
+
 
 ## Type Safety
 
