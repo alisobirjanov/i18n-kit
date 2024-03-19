@@ -25,16 +25,16 @@ export type MessagesFlattenKeys<T = Messages, K = keyof T> = K extends string
     : unknown
   : unknown
 
-interface Options {
+export interface Options {
   locale: Locales
-  messages: any
+  messages: Record<string, object>
 }
 
 export interface Context {
   t: (key: MessagesFlattenKeys, param?: Record<string, string>) => string
   locale: any
   setLocale: (newLang: Locales) => void
-  messages: unknown
+  messages: Record<string, object>
 }
 
 export function createContext(options: Options, createState: any): Context {
@@ -49,11 +49,11 @@ export function createContext(options: Options, createState: any): Context {
     messages,
     locale,
     t(key, param) {
-      let message = messages[locale.value]
-      if (!message)
+      const resource = messages[locale.value]
+      if (!resource)
         return ''
 
-      message = typeof key === 'string' ? getMessage(message, key) : ''
+      const message = typeof key === 'string' ? getMessage(resource, key) : ''
       if (!param)
         return message
       return interpolateTranslation(message, param)
