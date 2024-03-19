@@ -48,6 +48,21 @@ app.mount('#app')
 </template>
 ```
 
+## Message Format Syntax
+i18n-kit supports interpolation using placeholders `{{}}`
+```ts
+const messages = {
+  en: {
+    message: {
+      hello: '{{msg}} world'
+    }
+  }
+}
+```
+```html
+<p>{{ $t('message.hello', { msg: 'hello' }) }}</p>
+```
+
 ## Hook
 
 ```ts
