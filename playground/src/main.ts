@@ -1,6 +1,6 @@
 import { createApp } from 'vue'
 import { createI18n } from '@i18n-kit/vue'
-import messages from 'virtual:i18n-kit'
+import messages from '@i18n-kit/messages'
 import App from './App.vue'
 import 'virtual:uno.css'
 

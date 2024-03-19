@@ -1,3 +1,13 @@
 {
-  "my-test-key": "value"
+  "server": {
+    "not_found": "Page Not Found.",
+    "internal_title": "Internal Server Error.",
+    "internal_content": "We are already working to solve the problem.",
+    "something_wrong": "Something Went Wrong."
+  },
+  "notifications": {
+    "updated": "Succesfully updated",
+    "server_error": "Server Error",
+    "went_wrong": "Something Went Wrong"
+  }
 }

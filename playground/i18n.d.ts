@@ -1,4 +1,4 @@
-declare module 'virtual:i18n-kit' {
+declare module '@i18n-kit/messages' {
   import en from 'D:/open-source/ts-starter/playground/locales/en.json'
   import ru from 'D:/open-source/ts-starter/playground/locales/ru.json'
   import uz from 'D:/open-source/ts-starter/playground/locales/uz.json'

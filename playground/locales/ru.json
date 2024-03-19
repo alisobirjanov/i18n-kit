@@ -1,3 +1,13 @@
 {
-
+  "server": {
+    "not_found": "Страница не найдена.",
+    "internal_title": "Внутренняя ошибка сервера.",
+    "internal_content": "Мы уже работаем над решением проблемы.",
+    "something_wrong": "Что-то пошло не так."
+  },
+  "notifications": {
+    "updated": "Успешно обновлено",
+    "server_error": "Ошибка сервера",
+    "went_wrong": "Что-то пошло не так"
+  }
 }

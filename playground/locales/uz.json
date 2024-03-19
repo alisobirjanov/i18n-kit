@@ -1,10 +1,13 @@
 {
-  "asdd": {
-    "asas": {
-      "sasasasasasa": "asdwsd"
-    },
-    "test123": "test"
+  "server": {
+    "not_found": "Sahifa topilmadi.",
+    "internal_title": "Serverdagi ichki xatolik.",
+    "internal_content": "Biz allaqachon muammoni hal qilish ustida ishlamoqdamiz.",
+    "something_wrong": "Nimadir noto'g'ri bajarildi."
   },
-  "test": "test uz",
-  "test56": "test uz"
+  "notifications": {
+    "updated": "Muvaffaqiyatli yangilandi",
+    "server_error": "Server xatosi",
+    "went_wrong": "Nimadir noto'g'ri bajarildi"
+  }
 }
