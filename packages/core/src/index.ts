@@ -26,8 +26,8 @@ export type MessagesFlattenKeys<T = Messages, K = keyof T> = K extends string
   : unknown
 
 export interface Options {
-  locale: Locales
-  messages: Record<string, object>
+  locale?: Locales
+  messages?: Record<string, object>
 }
 
 export interface Context {
@@ -71,7 +71,7 @@ export function createContext(options: Options, createState: any): Context {
     },
   }
 
-  context.setLocale(defaultLocale)
+  defaultLocale && context.setLocale(defaultLocale)
 
   return context
 }
