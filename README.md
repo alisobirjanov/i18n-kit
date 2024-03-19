@@ -3,9 +3,9 @@
 
 # 🌟 Features
 
-- i18n resource pre-compilation
 - 100% TypeSafe
 - Lightweight
+- i18n resource pre-compilation
 
 ![Скриншот 18-03-2024 221124](https://github.com/alisobirjanov/i18n-kit/assets/80165465/55df9b46-9b3e-4373-9560-b6ea36bc7958)
 
@@ -25,14 +25,9 @@ import { createI18n } from '@i18n-kit/vue'
 import uz from '../locales/uz.json'
 import en from '../locales/en.json'
 
-const messages = {
-  uz,
-  en,
-}
-
 const i18n = createI18n({
   locale: 'uz',
-  messages,
+  messages: { uz, ru }
 })
 
 const app = createApp(App)
@@ -51,6 +46,26 @@ app.mount('#app')
     </h3>
   </div>
 </template>
+```
+
+## Type Safety
+
+```ts
+import uz from '../locales/uz.json'
+import en from '../locales/en.json'
+
+const messages = { uz, ru }
+
+declare module '@i18n-kit/vue' {
+  interface Register {
+    messages: typeof messages
+  }
+}
+
+const i18n = createI18n({
+  locale: 'uz',
+  messages
+})
 ```
 
 ## Unplugin
@@ -153,7 +168,9 @@ interface KeepOption {
    */
   locales?: string
   /**
-   * Path to generated .d.ts file
+   * Filepath to generate corresponding .d.ts file.
+   * Defaults to './i18n.d.ts' when `typescript` is installed locally.
+   * Set `false` to disable.
    * @default false
    */
   dts?: boolean | string
