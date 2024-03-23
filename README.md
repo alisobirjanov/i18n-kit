@@ -1,6 +1,11 @@
 # i18n-kit
 🌐 Lightweight internationalization plugin for Vue.js 3
 
+> [!NOTE]
+> 🚧 **Work in Progress**
+>
+> i18n-kit is currently in active development and not usable for production yet.
+
 # 🌟 Features
 
 - 100% TypeSafe
@@ -94,7 +99,7 @@ const i18n = createI18n({
 
 ## Unplugin
 ```shell
-pnpm add @i18n-kit/unplugin
+pnpm add -D @i18n-kit/unplugin
 ```
 
 ```ts
