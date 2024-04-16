@@ -18,9 +18,9 @@
       "require": "./dist/index.cjs"
     },
     "./vite": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
+      "types": "./dist/vite.d.ts",
+      "import": "./dist/vite.js",
+      "require": "./dist/vite.cjs"
     }
   },
   "main": "./dist/index.cjs",
