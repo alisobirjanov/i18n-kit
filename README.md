@@ -105,7 +105,7 @@ pnpm add -D @i18n-kit/unplugin
 ```ts
 // vite.config.ts
 import { defineConfig } from 'vite'
-import i18nPlugin from '@i18n-kit/unplugin'
+import i18nPlugin from '@i18n-kit/unplugin/vite'
 
 export default defineConfig({
   plugins: [
