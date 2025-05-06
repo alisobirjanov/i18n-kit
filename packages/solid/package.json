@@ -1,13 +1,13 @@
 {
-  "name": "@i18n-kit/core",
+  "name": "@i18n-kit/solid",
   "type": "module",
-  "version": "0.0.1-beta.2",
+  "version": "0.0.0",
   "private": false,
   "author": "Ali",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/alisobirjanov/i18n-kit.git",
-    "directory": "packages/core"
+    "directory": "packages/solid"
   },
   "keywords": [],
   "sideEffects": false,
@@ -29,5 +29,9 @@
     "build": "tsup",
     "dev": "tsup --watch",
     "start": "esno src/index.ts"
+  },
+  "dependencies": {
+    "@i18n-kit/core": "workspace:*",
+    "solid-js": "^1.9.5"
   }
 }

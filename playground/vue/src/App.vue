@@ -5,7 +5,7 @@
 <template>
   <div>
     <h3>
-      {{ $t('notifications.server_error') }}
+      {{ $t('server.something_wrong') }}
     </h3>
   </div>
 </template>

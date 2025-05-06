@@ -15,6 +15,7 @@ export function createI18n(options: Options = {}) {
   const context = createContext(options, ref)
 
   return {
+    context,
     install(app: App) {
       app.provide('context', context)
       app.config.globalProperties.$t = context.t

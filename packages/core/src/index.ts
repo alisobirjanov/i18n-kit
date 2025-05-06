@@ -7,7 +7,7 @@ type AsyncFunction = (...arguments_: any[]) => Promise<unknown>
 type AsyncReturnType<Target extends AsyncFunction> = Awaited<ReturnType<Target>>
 
 type Messages<T = Register> = PickPropertyTypes<T, 'messages'>
-type Locales = keyof Messages
+type Locales = keyof Messages | (string & {})
 
 type FlattenObjectKeys<T, K = keyof T> = K extends string
   ? T extends Record<string, unknown>
@@ -30,8 +30,9 @@ export interface Options {
   messages?: Record<string, object>
 }
 
+
 export interface Context {
-  t: (key: MessagesFlattenKeys, param?: Record<string, string>) => string
+  t: (key: MessagesFlattenKeys, param?: Record<string, string | number>) => string
   locale: any
   setLocale: (newLang: Locales) => void
   messages: Record<string, object>
@@ -43,7 +44,7 @@ export function createContext(options: Options, createState: any): Context {
     messages = {},
   } = options
 
-  const locale = createState('')
+  const locale = createState(defaultLocale || '')
 
   const context: Context = {
     messages,
@@ -53,7 +54,8 @@ export function createContext(options: Options, createState: any): Context {
       if (!resource)
         return ''
 
-      const message = typeof key === 'string' ? getMessage(resource, key) : ''
+      const message = typeof key === 'string' ? getMessage(resource, key) : key
+
       if (!param)
         return message
       return interpolateTranslation(message, param)
@@ -71,8 +73,6 @@ export function createContext(options: Options, createState: any): Context {
     },
   }
 
-  defaultLocale && context.setLocale(defaultLocale)
-
   return context
 }
 
@@ -81,7 +81,7 @@ function getMessage(messages: any, key: string) {
 }
 
 // https://github.com/Ayub-Begimkulov/i18n/blob/main/src/i18n.ts#L125
-const mustacheParamRegex = /\{\{\s*([a-zA-Z10-9]+)\s*\}\}/g
+const mustacheParamRegex = /\{\s*([a-zA-Z10-9]+)\s*\}/g
 
 // not the most performant way, but it should be okay
 function interpolateTranslation(

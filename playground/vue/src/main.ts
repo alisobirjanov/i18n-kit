@@ -1,13 +1,13 @@
 import { createApp } from 'vue'
 import { createI18n } from '@i18n-kit/vue'
-import messages from '@i18n-kit/messages'
+// import messages from '@i18n-kit/messages'
 import App from './App.vue'
 import 'virtual:uno.css'
 
-// const messages = {
-//   ru: () => import('../locales/ru.json'),
-//   uz: () => import('../locales/uz.json'),
-// }
+const messages = {
+  ru: () => import('../../locales/ru.json'),
+  uz: () => import('../../locales/uz.json'),
+}
 
 // declare module '@i18n-kit/vue' {
 //   interface Register {
@@ -16,7 +16,7 @@ import 'virtual:uno.css'
 // }
 
 const i18n = createI18n({
-  locale: 'uz',
+  locale: 'en',
   messages,
 })
 
