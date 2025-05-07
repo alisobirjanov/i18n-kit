@@ -1,3 +1,8 @@
+import { getLanguageToPluralFn, getPluralForm } from './plural'
+import { getMessage, interpolateTranslation } from './utils'
+
+import type { PluralRules } from './plural'
+
 export interface Register {
 
 }
@@ -26,6 +31,7 @@ export type MessagesFlattenKeys<T = Messages, K = keyof T> = K extends string
   : unknown
 
 export interface Options {
+  pluralRules?: PluralRules
   locale?: Locales
   messages?: Record<string, object>
 }
@@ -42,9 +48,12 @@ export function createContext(options: Options, createState: any): Context {
   const {
     locale: defaultLocale,
     messages = {},
+    pluralRules
   } = options
 
   const locale = createState(defaultLocale || '')
+
+  const languageToFn = pluralRules ? getLanguageToPluralFn(pluralRules) : {}
 
   const context: Context = {
     messages,
@@ -52,12 +61,20 @@ export function createContext(options: Options, createState: any): Context {
     t(key, param) {
       const resource = messages[locale.value]
       if (!resource)
-        return ''
+        return key
 
-      const message = typeof key === 'string' ? getMessage(resource, key) : key
+      let message = typeof key === 'string' ? getMessage(resource, key) : key
 
-      if (!param)
+      if (!param) {
         return message
+      }
+
+      const pluralFn = languageToFn[locale.value]
+
+      if(pluralFn && typeof param.count === 'number') {
+        message = getPluralForm(pluralFn, message, param.count)
+      }
+
       return interpolateTranslation(message, param)
     },
     async setLocale(newLocale) {
@@ -74,24 +91,4 @@ export function createContext(options: Options, createState: any): Context {
   }
 
   return context
-}
-
-function getMessage(messages: any, key: string) {
-  return key.split('.').reduce((acc, key) => acc[key] ? acc[key] : '', messages)
-}
-
-// https://github.com/Ayub-Begimkulov/i18n/blob/main/src/i18n.ts#L125
-const mustacheParamRegex = /\{\s*([a-zA-Z10-9]+)\s*\}/g
-
-// not the most performant way, but it should be okay
-function interpolateTranslation(
-  translation: string,
-  params: Record<string, string | number>,
-) {
-  return translation.replace(mustacheParamRegex, (original, paramKey) => {
-    if (paramKey in params)
-      return String(params[paramKey])
-
-    return original
-  })
 }
