@@ -7,9 +7,15 @@ import { Comp } from './Comp'
 const messages = {
   en: {
     test: 'Hello { name }',
+    hi: {
+      test: 'Hello { name }',
+    }
   },
   uz: {
     test: 'Salom { name }',
+    hi: {
+      test: 'Hello { name }',
+    }
   }
 }
 

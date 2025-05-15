@@ -5,5 +5,5 @@ export const Comp = () => {
 
   const { t } = useI18n()
 
-  return <span>Comp { t('test') }</span>
+  return <span>Comp { t('hi.test', {name: 'Ali'}) }</span>
 }
